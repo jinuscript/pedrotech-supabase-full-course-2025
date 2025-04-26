@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabaseClient } from "@/services";
+import { TaskButton } from "@/components";
 import s from "./TaskBoard.module.css";
 
 interface Task {
@@ -39,6 +40,10 @@ export const TaskBoard = () => {
           <li key={task.id}>
             <p>{task.title}</p>
             <p>{task.description}</p>
+            <div>
+              <TaskButton type="수정" />
+              <TaskButton type="삭제" />
+            </div>
           </li>
         );
       })}
