@@ -9,8 +9,14 @@ export const TaskForm = () => {
     setTask((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(task);
+  };
+
   return (
-    <form className={s.TaskForm}>
+    <form className={s.TaskForm} onSubmit={handleSubmit}>
       {/* 제목 */}
       <input
         className={s.input}
