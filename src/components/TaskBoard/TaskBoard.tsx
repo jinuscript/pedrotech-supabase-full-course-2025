@@ -41,8 +41,8 @@ export const TaskBoard = () => {
             <p>{task.title}</p>
             <p>{task.description}</p>
             <div>
-              <TaskButton type="수정" />
-              <TaskButton type="삭제" />
+              <TaskButton type="수정" id={task.id} />
+              <TaskButton type="삭제" id={task.id} />
             </div>
           </li>
         );
