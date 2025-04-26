@@ -1,3 +1,4 @@
+import { supabaseClient } from "@/services/supabase-client";
 import { useState } from "react";
 import s from "./TaskForm.module.css";
 
@@ -12,7 +13,16 @@ export const TaskForm = () => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(task);
+    // supabase로 POST 기능 수행
+    const { error } = await supabaseClient.from("tasks").insert(task).single();
+
+    // 에러 핸들링
+    if (error) {
+      console.error("할일추가 중 에러 발생!: ", error.message);
+    }
+
+    // 상태 초기화
+    setTask({ title: "", description: "" });
   };
 
   return (
