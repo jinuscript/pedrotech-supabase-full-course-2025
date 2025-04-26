@@ -13,6 +13,9 @@ function App() {
 
     setSession(currentSession.data.session);
   };
+
+  const logout = async () => {
+    await supabaseClient.auth.signOut();
   };
 
   useEffect(() => {
@@ -25,6 +28,7 @@ function App() {
         <>
           <TaskForm />
           <TaskBoard />
+          <button onClick={logout}>로그아웃</button>
         </>
       ) : (
         <LoginForm />
