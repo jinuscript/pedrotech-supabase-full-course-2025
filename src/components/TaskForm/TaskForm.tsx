@@ -19,6 +19,7 @@ export const TaskForm = () => {
     // 에러 핸들링
     if (error) {
       console.error("할일추가 중 에러 발생!: ", error.message);
+      return;
     }
 
     // 상태 초기화
