@@ -1,5 +1,12 @@
+import { TaskBoard, TaskForm } from "@/components";
+
 function App() {
-  return <main></main>;
+  return (
+    <main>
+      <TaskForm />
+      <TaskBoard />
+    </main>
+  );
 }
 
 export default App;
