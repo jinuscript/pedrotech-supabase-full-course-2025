@@ -11,7 +11,8 @@ function App() {
 
     console.log(currentSession);
 
-    setSession(currentSession.data);
+    setSession(currentSession.data.session);
+  };
   };
 
   useEffect(() => {
