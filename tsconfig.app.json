@@ -20,7 +20,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* 여기 추가 시작 */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+    /* 여기 추가 끝 */
   },
   "include": ["src"]
 }
