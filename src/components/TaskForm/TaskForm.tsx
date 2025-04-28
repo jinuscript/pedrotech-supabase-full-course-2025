@@ -1,8 +1,9 @@
 import { supabaseClient } from "@/services/supabase-client";
 import { useState } from "react";
 import s from "./TaskForm.module.css";
+import { Session } from "@supabase/supabase-js";
 
-export const TaskForm = () => {
+export const TaskForm = ({ session }: { session: Session }) => {
   const [task, setTask] = useState({ title: "", description: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +15,10 @@ export const TaskForm = () => {
     e.preventDefault();
 
     // supabase로 POST 기능 수행
-    const { error } = await supabaseClient.from("tasks").insert(task).single();
+    const { error } = await supabaseClient
+      .from("tasks")
+      .insert({ ...task, email: session.user.email })
+      .single();
 
     // 에러 핸들링
     if (error) {
