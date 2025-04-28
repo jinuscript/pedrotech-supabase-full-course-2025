@@ -34,8 +34,8 @@ function App() {
     <main>
       {session ? (
         <>
-          <TaskForm />
-          <TaskBoard />
+          <TaskForm session={session} />
+          <TaskBoard session={session} />
           <button onClick={logout}>로그아웃</button>
         </>
       ) : (

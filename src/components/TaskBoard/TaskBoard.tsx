@@ -10,7 +10,7 @@ interface Task {
   created_at: string;
 }
 
-export const TaskBoard = () => {
+export const TaskBoard = ({ session }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchTasks = async () => {
