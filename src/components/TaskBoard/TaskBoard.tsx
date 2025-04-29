@@ -33,6 +33,22 @@ export const TaskBoard = ({ session }) => {
     fetchTasks();
   }, []);
 
+  useEffect(() => {
+    const channel = supabaseClient.channel("tasks-channel");
+    channel
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "tasks" },
+        (payload) => {
+          const newTask = payload.new as Task;
+          setTasks((prev) => [...prev, newTask]);
+        }
+      )
+      .subscribe((status) => {
+        console.log("Subscription: ", status);
+      });
+  }, []);
+
   return (
     <ol className={s.TaskBoard}>
       {tasks.map((task) => {
