@@ -15,10 +15,17 @@ export const TaskForm = ({ session }: { session: Session }) => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let imageUrl: string | null = null;
+
+    if (taskImage) {
+      // 수파베이스한테 storage에 저장시키고 url을 받아오는 함수
+      imageUrl = await uploadImage(taskImage);
+    }
+
     // supabase로 POST 기능 수행
     const { error } = await supabaseClient
       .from("tasks")
-      .insert({ ...task, email: session.user.email })
+      .insert({ ...task, email: session.user.email, image_url: imageUrl })
       .single();
 
     // 에러 핸들링
@@ -29,6 +36,25 @@ export const TaskForm = ({ session }: { session: Session }) => {
 
     // 상태 초기화
     setTask({ title: "", description: "" });
+  };
+
+  const uploadImage = async (file: File): Promise<string | null> => {
+    const filePath = `${file.name}-${Date.now()}`;
+
+    const { error } = await supabaseClient.storage
+      .from("tasks-images")
+      .upload(filePath, file);
+
+    if (error) {
+      console.error("Error uploading image: ", error.message);
+      return null;
+    }
+
+    const { data } = await supabaseClient.storage
+      .from("tasks-images")
+      .getPublicUrl(filePath);
+
+    return data.publicUrl;
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
