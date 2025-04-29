@@ -1,10 +1,11 @@
 import { supabaseClient } from "@/services/supabase-client";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import s from "./TaskForm.module.css";
 import { Session } from "@supabase/supabase-js";
 
 export const TaskForm = ({ session }: { session: Session }) => {
   const [task, setTask] = useState({ title: "", description: "" });
+  const [taskImage, setTaskImage] = useState<File | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,6 +31,12 @@ export const TaskForm = ({ session }: { session: Session }) => {
     setTask({ title: "", description: "" });
   };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setTaskImage(e.target.files[0]);
+    }
+  };
+
   return (
     <form className={s.TaskForm} onSubmit={handleSubmit}>
       {/* 제목 */}
@@ -48,6 +55,8 @@ export const TaskForm = ({ session }: { session: Session }) => {
         value={task.description}
         onChange={handleChange}
       />
+
+      <input type="file" accept="image/*" onChange={handleFileChange} />
 
       <button className={s.button}>등록하기</button>
     </form>
