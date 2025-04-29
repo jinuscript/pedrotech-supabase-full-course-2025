@@ -8,9 +8,10 @@ interface Task {
   title: string;
   description: string;
   created_at: string;
+  image_url: string;
 }
 
-export const TaskBoard = ({ session }) => {
+export const TaskBoard = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchTasks = async () => {
@@ -56,6 +57,11 @@ export const TaskBoard = ({ session }) => {
           <li key={task.id}>
             <p>{task.title}</p>
             <p>{task.description}</p>
+            <img
+              src={task.image_url}
+              alt={task.image_url}
+              style={{ height: "70px" }}
+            />
             <div>
               <TaskButton type="수정" id={task.id} />
               <TaskButton type="삭제" id={task.id} />
